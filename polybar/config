@@ -1,0 +1,303 @@
+;----------------------------------------------
+;             My Polybar Config               ;
+;----------------------------------------------
+;
+
+; manually set colors rather than .Xresources
+[colors]
+bg = #ee2f343f 
+bg-pink = #f72f343f
+bg-panel = #f2f9ff
+icon = #009688
+
+txt = #FAFAFA
+txt-alt = #424242
+txt-alrt = #c94277
+
+xwbg = ${self.bg-pink} 
+wmbg = ${self.bg-panel}
+backlightbg = ${self.bg-panel}
+
+wlan-connected = ${self.bg-panel}
+wlan-disconnected = ${self.bg-panel}
+
+battbg-charging = ${self.bg-panel}
+battbg-discharging = ${self.bg-panel}
+battbg-full = ${self.bg-panel}
+
+volbg = ${self.bg-panel}
+datebg = ${self.bg-panel}
+
+[bar/bar]
+dpi = 192
+monitor = eDP-1
+width = 3150 
+height = 48 
+bottom = true
+offset-x = 0
+offfset-y = 0
+
+radius = 4
+
+background = ${colors.bg}
+
+border-top-size = 0
+border-bottom-size = 10
+border-left-size = 50
+border-color = #ff 
+
+
+padding-left = 0
+padding-right = 0 
+
+module-margin-left = 0
+module-margin-right = 0
+
+
+font-0 = NotoSansUI:size=10;1
+font-1 = FontAwesome:fontformat=truetype:size=10;1
+font-2 = mono:pixelsize=9;1
+font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-4 = Wuncon Siji:pixelsize=9;1
+font-5 = NotoSans:size=10;1
+
+modules-left = i3 paddinglite xwindow paddinglite 
+modules-right = backlight padding volume padding wlan padding battery padding date
+
+tray-position = right 
+tray-padding = 2
+tray-transparent = false
+tray-detached = false
+tray-background = ${colors.bg}
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[module/xwindow]
+type = internal/xwindow
+
+label = %title:0:30:...%
+label-padding = 1
+label-background  = ${colors.xwbg}
+label-foreground = ${colors.txt} 
+
+
+
+[module/i3]
+type = internal/i3
+strip-wsnumbers = true
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+pin-workspaces = true
+
+label-mode = %mode%
+label-mode-padding = 1
+
+label-state-foreground = ${colors.icon}
+
+label-focused = %icon%
+label-focused-background = ${colors.wmbg}
+label-focused-foreground = ${colors.icon} 
+label-focused-padding = 1
+
+label-unfocused = %icon%
+label-unfocused-foreground = ${colors.wmbg}
+label-unfocused-padding = 1 
+
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+output = eDP-1
+enable-scroll = true
+
+format = <ramp> <label> 
+format-background = ${colors.backlightbg}
+label-foreground = ${colors.txt-alt}
+format-padding = 1
+
+label = %percentage%%
+
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+ramp-foreground = ${colors.icon}
+
+
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+[module/padding]
+type = custom/text
+content = |
+content-foreground = ${colors.bg}
+content-background = ${colors.bg}
+
+[module/paddinglite]
+type = custom/text
+content = |
+content-foreground = ${colors.bg}
+content-background = ${colors.bg}
+
+[module/wlan]
+type = internal/network
+interface = wlp58s0
+interval = 3.0
+
+; what is shown when connected to wifi
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+label-connected-foreground = ${colors.txt-alt}
+format-connected-padding = 1
+format-connected-background = ${colors.wlan-connected}
+
+; what is shown when DC
+format-disconnected = <label-disconnected>
+label-disconnected = no WiFi
+label-disconnected-foreground = ${colors.txt-alt} 
+format-disconnected-background = ${colors.wlan-disconnected}
+format-disconnected-padding = 1
+
+ramp-signal-0 =  
+ramp-signal-1 =  
+ramp-signal-2 =  
+ramp-signal-3 =  
+ramp-signal-4 =  
+ramp-signal-foreground = ${colors.icon}
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = ""
+format-prefix-fg = ${colors.fg-alt}
+format-underline = #9f78e1 
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 99
+
+; format-charging
+format-charging = <animation-charging> <label-charging>
+format-charging-background = ${colors.battbg-charging}
+format-charging-padding = 1 
+label-charging-foreground = ${colors.txt-alt}
+; format-discharging
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-background = ${colors.battbg-discharging} 
+format-discharging-padding = 1
+label-discharging-foreground = ${colors.txt-alt} 
+; format-full
+format-full-prefix = ">"
+format-full-background = ${colors.battbg-full}
+format-full-padding = 1 
+
+ramp-capacity-0 =  
+ramp-capacity-1 =  
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.icon}
+
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.icon}
+
+
+[module/date]
+type = internal/date
+interval = 5
+date = %a %d/%m/%y
+time = "%H:%M"
+
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+
+label = %date% %time%
+format-background = ${colors.datebg}
+label-foreground = ${colors.txt-alt}
+format-padding = 1
+
+[module/volume]
+type = internal/volume
+
+; volume on
+format-volume = <label-volume>
+format-volume-prefix = " "
+format-volume-foreground = ${colors.icon}
+label-volume = %percentage% 
+label-volume-foreground = ${colors.txt-alt}
+format-volume-padding = 1
+format-volume-background = ${colors.volbg}
+; volume off
+format-muted-prefix = " "
+format-muted-prefix-foreground = #A70950
+format-muted-background = ${colors.volbg}
+label-muted = " 0" 
+label-muted-foreground = ${colors.txt-alt}
+format-muted-padding = 1
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 90
+
+format = <ramp> <label>
+format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature%
+label-warn = %temperature%
+format-warn-fg = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 =  
+ramp-fg = ${colors.fg-alt}
+
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-open-fg = ${colors.secondary}
+label-close =  cancel
+label-close-fg = ${colors.secondary}
+label-separator = |
+label-separator-fg = ${colors.fg-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
